@@ -8,8 +8,19 @@ var router = express.Router();
 router.use(bodyParser.json());
 
 /* GET users listing. */
-router.get('/', function (req, res, next) {
-  res.send('respond with a resource');
+router.get('/', authenticate.verifyUser, authenticate.verifyAdmin, function (req, res, next) {
+  // res.send('respond with a resource');
+  User.find({}, (err, users) => {
+    if (err) {
+      var err = new Error("You are not admin");
+      err.status = 403;
+      return next(err);
+    } else {
+      res.statusCode = 200;
+      res.setHeader('Content_type', 'application/json');
+      res.json(users);
+    }
+  })
 });
 
 router.post('/signup', (req, res, next) => {
