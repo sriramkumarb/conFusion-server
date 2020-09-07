@@ -3,14 +3,14 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const authenticate = require('../authenticate');
 const cors = require('./cors');
-const Favorites = require('../models/favorite');
+const Favorites = require('../models/favorites');
 const Dishes = require('../models/dishes');
 
-const favRouter = express.Router();
+const favoriteRouter = express.Router();
 
-favRouter.use(bodyParser.json());
+favoriteRouter.use(bodyParser.json());
 
-favRouter.route('/')
+favoriteRouter.route('/')
     .options(cors.corsWithOptions, (req, res) => {
         res.sendStatus(200);
     })
@@ -96,7 +96,7 @@ favRouter.route('/')
     })
 
 // handles all request to /leaders/:leaderId
-favRouter.route('/:dishId')
+favoriteRouter.route('/:dishId')
     .options(cors.corsWithOptions, (req, res) => {
         res.sendStatus(200);
     })
@@ -210,4 +210,4 @@ favRouter.route('/:dishId')
         });
     });
 
-module.exports = favRouter;
+module.exports = favoriteRouter;
